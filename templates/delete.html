@@ -1,0 +1,33 @@
+{% block header %}
+<main class="container">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">本当にこの記事を削除しますか？</h4>
+        <p class="lead">削除した場合は復元できません。</p>
+        <hr>
+        <button type="button" class="btn btn-outline-success"
+            onclick="location.href='{% url 'list' %}'">トップページへ戻る</button>
+    </div>
+</main>
+{% endblock header %}
+
+
+
+{% block content %}
+
+<body>
+    <div class="container">
+        <div class="alert alert-warning" role="alert">
+            <p>タイトル：{{ object.title }}</p>
+            <p>投稿者：{{ object.author }}</p>
+            {% if object.sns_image %}
+            <p><img src="{{ object.sns_image.url }}"></p>
+            {% endif %}
+            <form method="POST">{% csrf_token %}
+                <input type="submit" value="削除">
+            </form>
+
+        </div>
+    </div>
+</body>
+
+{% endblock content %}

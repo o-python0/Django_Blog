@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+
+{% block header %}
+<main class="container">
+    <div class="bg-light p-5 rounded mt-3">
+        <h1>詳細画面</h1>
+        <p class="lead">This example is a quick exercise to illustrate how the bottom navbar works.</p>
+        <button type="button" class="btn btn-outline-success"
+            onclick="location.href='{% url 'list' %}'">トップページへ戻る</button>
+        {% if user.username == object.author %}
+        <a href="{% url 'update' object.pk %}" class="btn btn-primary" role="button" aria-pressed="true">編集する</a>
+        {% endif %}
+    </div>
+</main>
+{% endblock header %}
+
+
+{% block content %}
+
+<body>
+    <div class="container">
+        <div class="alert alert-warning" role="alert">
+            <h2>タイトル：{{ object.title }}    <p>投稿者：{{ object.author }}</p></h2>
+            <p>内容：{{ object.content }}</p>
+            {% if object.sns_image %}
+            <p><img src="{{ object.sns_image.url }}" width="300"></p>
+            {% endif %}
+            <a href="{% url 'good' object.pk %}" class="btn btn-primary" role="button" aria-pressed="true">いいね！</a>
+        </div>
+    </div>
+</body>
+
+{% endblock content %}

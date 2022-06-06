@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+
+{% block header %}
+<main class="container">
+    <div class="bg-light p-5 rounded mt-3">
+        <h1>記事投稿サービス</h1>
+        <p class="lead">ようこそ！{{ user.username }}さん</p>
+        <button type="button" class="btn btn-outline-danger" onclick="location.href='{% url 'logout' %}'">ログアウト</button>
+        <button type="button" class="btn btn-outline-primary" onclick="location.href='{% url 'create' %}'">新規作成</button>
+    </div>
+</main>
+{% endblock header %}
+
+
+{% block content %}
+
+<body>
+    <div class="container">
+        {% for obj in object_list %}
+        <div class="alert alert-warning" role="alert">
+            <p>タイトル：<a href="{% url 'detail' obj.pk %}">{{ obj.title }}</a></p>
+            <p>投稿者：{{ obj.author }}</p>
+            <button type="button" class="btn rounded-pill btn-secondary">
+                既読数 <span class="badge rounded-pill bg-info text-success">{{ obj.read }}</span>人
+                <span class="visually-hidden">既読数</span>
+              </button>
+            <a href="{% url 'good' obj.pk %}" class="btn btn-primary" role="button" aria-pressed="true">いいね！({{ obj.good }})</a>
+            {% if user.username == obj.author %}
+            <a href="{% url 'delete' obj.pk %}" class="btn btn-danger" role="button" aria-pressed="true">削除する</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+{% endblock content %}
